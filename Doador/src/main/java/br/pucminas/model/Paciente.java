@@ -30,7 +30,7 @@ public class Paciente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "id_paciente")
     private List<Endereco> enderecos;
     @Column(length = 255)
@@ -123,6 +123,11 @@ public class Paciente implements Serializable {
 
     public List<Endereco> getEnderecos() {
         return enderecos;
+    }
+
+    public void addEndereco(Endereco endereco) {
+        this.enderecos.add(endereco);
+        endereco.setPaciente(this);
     }
 
     public void setEnderecos(List<Endereco> enderecos) {

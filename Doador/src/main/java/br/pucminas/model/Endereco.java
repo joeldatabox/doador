@@ -15,7 +15,7 @@ import java.util.Objects;
  * Created by Joel Rodrigues on 04/10/2016.
  */
 @Entity
-public class Endereco implements Serializable{
+public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +28,24 @@ public class Endereco implements Serializable{
     private String cidade;
     @Lob
     private String observacao;
+
+    public Endereco() {
+    }
+
+    public Endereco(Paciente paciente, String descricao, String cep, String bairro, String cidade, String observacao) {
+        this();
+        this.paciente = paciente;
+        this.descricao = descricao;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.observacao = observacao;
+    }
+
+    public Endereco(Long id, Paciente paciente, String descricao, String cep, String bairro, String cidade, String observacao) {
+        this(paciente, descricao, cep, bairro, cidade, observacao);
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

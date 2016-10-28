@@ -2,7 +2,8 @@ package br.pucminas;
 
 import br.pucminas.exception.PacienteConflictException;
 import br.pucminas.exception.PacienteException;
-import br.pucminas.model.Doador;
+import br.pucminas.model.Endereco;
+import br.pucminas.model.Paciente;
 import br.pucminas.service.PacienteService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,14 +27,13 @@ public class DoadorApplicationTests {
     public void contextLoads() {
     }
 
-    private Doador createDoador() {
+    private Paciente createPaciente() {
         logger.info("INSTANCIANDO UM DOADOR");
-        Doador entity = new Doador();
+        Paciente entity = new Paciente();
         entity.setNome("Joel");
-        entity.setCidade("Rio verde");
+        entity.addEndereco(new Endereco(entity, "R. Padre Mariano", "75.904-439", "Primavera", "Rio Verde", "Observacao teste"));
         entity.setCpf("039.186.551-05");
-        entity.setEndereco("Rua padre Mariano");
-        entity.setNascimento(new Date());
+        entity.setDtNascimento(new Date());
         entity.setNomeMae("Edivanete Rodrigues Moreira");
         entity.setRg("656555");
         return entity;
@@ -45,18 +45,19 @@ public class DoadorApplicationTests {
 
         Exception exception = null;
 
-        Doador entity = createDoador();
+        Paciente entity = createPaciente();
 
         logger.info("TESTANDO INSERÇÃO DE REGISTRO");
-       // Doador createdEntity = service.create(entity);
+        Paciente createdEntity = service.create(entity);
 
-       // Assert.assertNotNull("FALHA - ESPERAVA-SE UM OBJETO NÃO NULLO", createdEntity);
-      //  Assert.assertNotNull("FALHA - ESPERAVA-SE UM ID NÃO NULO", createdEntity.getId());
-     //   Assert.assertEquals("FALHA - O ATRIBUTO NOME COM VALOR INESPERADO", "Joel", createdEntity.getNome());
+        Assert.assertNotNull("FALHA - ESPERAVA-SE UM OBJETO NÃO NULLO", createdEntity);
+        Assert.assertNotNull("FALHA - ESPERAVA-SE UM ID NÃO NULO", createdEntity.getId());
+        Assert.assertEquals("FALHA - O ATRIBUTO NOME COM VALOR INESPERADO", "Joel", createdEntity.getNome());
 
         logger.info("TESTANDO CONFLITO DE REGISTROS");
+        entity.setId(null);
         try {
-        //    service.create(entity);
+            service.create(entity);
         } catch (Exception e) {
             exception = e;
         }
@@ -72,8 +73,8 @@ public class DoadorApplicationTests {
         testCreate();
         //Collection<Doador> list = service.findAll();
 
-       // Assert.assertNotNull("FALHA - ESPERAVA-SE REGISTRO VINDOS DO BANCO DE DADOS", list);
-       // Assert.assertEquals("FALHA - ESPERAVA-SE AO MENOS UM REGISTRO NA LISTA DE RESULTADOS", 1, list.size());
+        // Assert.assertNotNull("FALHA - ESPERAVA-SE REGISTRO VINDOS DO BANCO DE DADOS", list);
+        // Assert.assertEquals("FALHA - ESPERAVA-SE AO MENOS UM REGISTRO NA LISTA DE RESULTADOS", 1, list.size());
     }
 
     @Test
@@ -81,16 +82,16 @@ public class DoadorApplicationTests {
 
         Exception exception = null;
 
-        Doador entity = createDoador();
+        //Doador entity = createPaciente();
 
         logger.info("INSERINDO REGISTRO PARA TESTE");
         //entity = service.create(entity);
 
         logger.info("ATUALIZANDO CPF");
-        entity.setCpf("656565659");
+        //entity.setCpf("656565659");
         try {
             logger.info("ATUALIZANDO REGISTRO");
-      //      service.update(entity);
+            //      service.update(entity);
         } catch (PacienteException e) {
             exception = e;
         }
@@ -101,23 +102,23 @@ public class DoadorApplicationTests {
 
     @Test
     public void testDelete() {
-       // service.create(createDoador());
+        // service.create(createPaciente());
 
         Long id = new Long(1);
 
-       // Doador entity = service.findById(id);
+        // Doador entity = service.findById(id);
 
-      //  Assert.assertNotNull("failure - expected not null", entity);
+        //  Assert.assertNotNull("failure - expected not null", entity);
 
         //service.delete(entity);
 
-      //  Collection<Doador> list = service.findAll();
+        //  Collection<Doador> list = service.findAll();
 
-       // Assert.assertEquals("failure - expected size", 0, list.size());
+        // Assert.assertEquals("failure - expected size", 0, list.size());
 
-       // Doador deletedEntity = service.findById(id);
+        // Doador deletedEntity = service.findById(id);
 
-       // Assert.assertNull("failure - expected null", deletedEntity);
+        // Assert.assertNull("failure - expected null", deletedEntity);
 
     }
 
