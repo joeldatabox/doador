@@ -1,11 +1,6 @@
 package br.pucminas;
 
-import br.pucminas.exception.PacienteConflictException;
-import br.pucminas.exception.PacienteException;
-import br.pucminas.model.Endereco;
-import br.pucminas.model.Paciente;
 import br.pucminas.service.PacienteService;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -26,7 +19,7 @@ public class DoadorApplicationTests {
     @Test
     public void contextLoads() {
     }
-
+/*
     private Paciente createPaciente() {
         logger.info("INSTANCIANDO UM DOADOR");
         Paciente entity = new Paciente();
@@ -121,5 +114,5 @@ public class DoadorApplicationTests {
         // Assert.assertNull("failure - expected null", deletedEntity);
 
     }
-
+*/
 }
