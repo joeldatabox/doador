@@ -43,14 +43,14 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public Collection<Paciente> findAll() {
         Collection<Paciente> pacientes = (Collection<Paciente>) repository.findAll();
-        if (pacientes == null || pacientes.isEmpty()){
+        if (pacientes == null || pacientes.isEmpty()) {
             throw new PacienteNoContentException();
         }
         return pacientes;
     }
 
-    private Paciente merge(Paciente paciente){
-        if(paciente.getId() != null) {
+    private Paciente merge(Paciente paciente) {
+        if (paciente.getId() != null) {
             Paciente record = repository.findOne(paciente.getId());
             if (record == null) {
                 throw new PacienteException("registro não encontrado");
@@ -59,18 +59,19 @@ public class PacienteServiceImpl implements PacienteService {
                 throw new PacienteException("não pode alterar o cpf");
             }
             return repository.save(paciente);
-        }else{
+        } else {
             if (repository.findByCpf(paciente.getCpf()) != null) {
                 throw new PacienteConflictException("CPF já cadastrado");
             }
             try {
                 return repository.save(paciente);
-            }catch (ConstraintViolationException ex){
+            } catch (ConstraintViolationException ex) {
                 throw new PacienteException(ex);
             }
         }
 
     }
+
     @Override
     public Paciente create(Paciente paciente) {
         return merge(paciente);
