@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AgendaRepository extends CrudRepository<Agenda, Long>, QueryByExampleExecutor<Agenda> {
-
+    Agenda findByIdHemocentro(Long idHemocentro);
 }
