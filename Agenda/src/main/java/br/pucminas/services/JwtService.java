@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.print.DocFlavor;
+import javax.annotation.PostConstruct;
 import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
@@ -25,6 +25,11 @@ public class JwtService {
     @Value("${jwt.token.secret}")
     private String plainSecret;
     private String encodedSecret;
+
+    @PostConstruct
+    protected void init() {
+        this.encodedSecret = generateEncodedSecret(this.plainSecret);
+    }
 
     protected String generateEncodedSecret(String plainSecret) {
         if (StringUtils.isEmpty(plainSecret)) {

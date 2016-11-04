@@ -3,10 +3,9 @@ package br.pucminas.security;
 import br.pucminas.model.JwtUser;
 import br.pucminas.services.JwtService;
 import io.jsonwebtoken.JwtException;
-import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -22,7 +21,8 @@ import java.io.IOException;
 /**
  * Created by master on 03/11/16.
  */
-@WebFilter(urlPatterns = {"/*"})
+@Component
+@WebFilter(urlPatterns = {"/**/"})
 public class JwtFilter implements Filter {
     @Autowired
     private JwtService jwtTokenService;
