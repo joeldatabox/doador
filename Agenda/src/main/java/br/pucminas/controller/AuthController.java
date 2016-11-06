@@ -7,8 +7,9 @@ import br.pucminas.services.JwtService;
 import br.pucminas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,7 +22,8 @@ public class AuthController extends Controller<User> {
     @Autowired
     private JwtService jwtService;
 
-    @PostMapping(value = "/security/auth")
+
+    @RequestMapping(value = "/security/auth", method = RequestMethod.POST)
     public ResponseEntity<?> auth(@RequestBody User user) {
         Boolean correctCredentials = service.authenticate(user.getUserName(), user.getPassWord());
         if (correctCredentials) {

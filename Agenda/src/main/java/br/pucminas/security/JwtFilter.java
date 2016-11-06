@@ -5,7 +5,6 @@ import br.pucminas.services.JwtService;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,8 +20,7 @@ import java.io.IOException;
 /**
  * Created by master on 03/11/16.
  */
-@Component
-@WebFilter(urlPatterns = {"/**/"})
+@WebFilter(urlPatterns = { "/api/*" })
 public class JwtFilter implements Filter {
     @Autowired
     private JwtService jwtTokenService;
@@ -48,7 +46,7 @@ public class JwtFilter implements Filter {
             JwtUser jwtUser = jwtTokenService.getUser(authHeaderVal);
             httpRequest.setAttribute("jwtUser", jwtUser);
         } catch (JwtException ex) {
-            httpResponse.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
