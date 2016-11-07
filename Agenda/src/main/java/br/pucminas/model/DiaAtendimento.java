@@ -30,7 +30,7 @@ public class DiaAtendimento implements Serializable {
     @JoinColumn(name = "id_agenda", nullable = false)
     @JsonBackReference
     private Agenda agenda;
-    @Column(nullable = false, columnDefinition = "enum('DOMINGO','SEGUNDA','TERCA','QUINTA','SEXTA','SABADO')")
+    @Column(nullable = false, columnDefinition = "enum('DOMINGO','SEGUNDA','TERCA','QUARTA','QUINTA','SEXTA','SABADO')")
     @Enumerated(EnumType.STRING)
     private Dia dia;
     @Column(name = "hr_ini_atendimento", nullable = false)
