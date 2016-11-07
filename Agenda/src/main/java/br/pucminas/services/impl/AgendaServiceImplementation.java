@@ -5,6 +5,7 @@ import br.pucminas.exception.AgendaException;
 import br.pucminas.exception.AgendaNoContentException;
 import br.pucminas.exception.AgendaNotFoundException;
 import br.pucminas.model.Agenda;
+import br.pucminas.model.DiaAtendimento;
 import br.pucminas.repository.AgendaRepository;
 import br.pucminas.services.AgendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,20 @@ public class AgendaServiceImplementation implements AgendaService {
     }
 
     @Override
+    public Collection<DiaAtendimento> findDiaAtendimento(Long idAgenda) throws AgendaNoContentException {
+        Collection<DiaAtendimento> dias = (Collection<DiaAtendimento>) repository.getDiaAtendimento(idAgenda);
+        if (dias == null || dias.isEmpty()) {
+            throw new AgendaNoContentException();
+        }
+        return dias;
+    }
+
+    @Override
+    public Collection<DiaAtendimento> findDiaAtendimento(Agenda idAgenda) throws AgendaNoContentException {
+        return null;
+    }
+
+    @Override
     public Collection<Agenda> findAll() throws AgendaNoContentException {
         Collection<Agenda> agendas = (Collection<Agenda>) repository.findAll();
         if (agendas == null || agendas.isEmpty()) {
@@ -49,6 +64,7 @@ public class AgendaServiceImplementation implements AgendaService {
     }
 
     private Agenda merge(Agenda agenda) {
+        agenda.getDiasAtendimento().forEach(d -> d.setAgenda(agenda));
         if (agenda.getId() != null) {
             Agenda record = repository.findOne(agenda.getId());
             if (record == null) {

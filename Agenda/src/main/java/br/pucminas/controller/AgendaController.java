@@ -34,6 +34,25 @@ public class AgendaController extends Controller<Agenda> {
         }
     }
 
+    @RequestMapping(value = "/api/agenda/hemocentro/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Agenda> getByHemocentro(@PathVariable Long id, HttpServletResponse response) {
+        try {
+            Agenda agenda = service.findHemocentro(id);
+            return new ResponseEntity<Agenda>(agenda, HttpStatus.OK);
+        } catch (AgendaException ex) {
+            return processException(ex);
+        }
+    }
+
+    @RequestMapping(value = "/api/agenda/{id}/diaAtendimento", method = RequestMethod.GET)
+    public ResponseEntity<Agenda> getDiaAtendimento(@PathVariable Long id, HttpServletResponse response) {
+        try {
+            return new ResponseEntity(service.findDiaAtendimento(id), HttpStatus.OK);
+        } catch (AgendaException ex) {
+            return processException(ex);
+        }
+    }
+
     @RequestMapping(value = "/api/agenda", method = RequestMethod.GET)
     public ResponseEntity getAll(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
                                  @RequestParam(value = "size", defaultValue = "100", required = false) Integer size) {
@@ -44,7 +63,7 @@ public class AgendaController extends Controller<Agenda> {
         }
     }
 
-    @RequestMapping(value = "/api/agenda",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/agenda", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody Agenda agenda) {
         try {
             return new ResponseEntity(service.create(agenda), HttpStatus.CREATED);
@@ -53,7 +72,7 @@ public class AgendaController extends Controller<Agenda> {
         }
     }
 
-    @RequestMapping(value = "/api/agenda",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/agenda", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@RequestBody Agenda agenda) {
         try {
             return new ResponseEntity(service.update(agenda), HttpStatus.OK);

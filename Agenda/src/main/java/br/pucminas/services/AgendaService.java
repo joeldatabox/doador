@@ -4,6 +4,7 @@ import br.pucminas.exception.AgendaException;
 import br.pucminas.exception.AgendaNoContentException;
 import br.pucminas.exception.AgendaNotFoundException;
 import br.pucminas.model.Agenda;
+import br.pucminas.model.DiaAtendimento;
 
 import java.util.Collection;
 
@@ -14,6 +15,10 @@ public interface AgendaService {
     Agenda findById(Long id) throws AgendaNotFoundException;
 
     Agenda findHemocentro(Long idHemocentro) throws AgendaNotFoundException;
+
+    Collection<DiaAtendimento> findDiaAtendimento(Long idAgenda) throws AgendaNoContentException;
+
+    Collection<DiaAtendimento> findDiaAtendimento(Agenda idAgenda) throws AgendaNoContentException;
 
     Collection<Agenda> findAll() throws AgendaNoContentException;
 

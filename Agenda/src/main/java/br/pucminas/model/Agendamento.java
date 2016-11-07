@@ -1,5 +1,7 @@
 package br.pucminas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +26,7 @@ public class Agendamento implements Serializable {
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_agenda", nullable = false)
+    @JsonBackReference
     private Agenda agenda;
     @Column(name = "id_paciente", nullable = false)
     private Long idPaciente;

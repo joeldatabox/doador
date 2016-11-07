@@ -1,6 +1,7 @@
 package br.pucminas.model;
 
 import br.pucminas.model.enumeration.Dia;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -30,16 +28,15 @@ public class DiaAtendimento implements Serializable {
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_agenda", nullable = false)
+    @JsonBackReference
     private Agenda agenda;
     @Column(nullable = false, columnDefinition = "enum('DOMINGO','SEGUNDA','TERCA','QUINTA','SEXTA','SABADO')")
     @Enumerated(EnumType.STRING)
     private Dia dia;
-    @Temporal(TemporalType.TIME)
     @Column(name = "hr_ini_atendimento", nullable = false)
-    private Date hrInicioAtendimento;
-    @Temporal(TemporalType.TIME)
+    private String hrInicioAtendimento;
     @Column(name = "hr_end_atendimento", nullable = false)
-    private Date hrFimAtendimento;
+    private String hrFimAtendimento;
 
     public Long getId() {
         return id;
@@ -65,19 +62,19 @@ public class DiaAtendimento implements Serializable {
         this.dia = dia;
     }
 
-    public Date getHrInicioAtendimento() {
+    public String getHrInicioAtendimento() {
         return hrInicioAtendimento;
     }
 
-    public void setHrInicioAtendimento(Date hrInicioAtendimento) {
+    public void setHrInicioAtendimento(String hrInicioAtendimento) {
         this.hrInicioAtendimento = hrInicioAtendimento;
     }
 
-    public Date getHrFimAtendimento() {
+    public String getHrFimAtendimento() {
         return hrFimAtendimento;
     }
 
-    public void setHrFimAtendimento(Date hrFimAtendimento) {
+    public void setHrFimAtendimento(String hrFimAtendimento) {
         this.hrFimAtendimento = hrFimAtendimento;
     }
 

@@ -1,5 +1,7 @@
 package br.pucminas.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +29,7 @@ public class Agenda implements Serializable {
     private Long idHemocentro;
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "id_agenda")
+    @JsonManagedReference
     private List<DiaAtendimento> diasAtendimento;
     @Column(name = "qtde_leito", nullable = false)
     private Integer qtdeLeito;

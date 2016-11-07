@@ -10,8 +10,8 @@ Create table dia_atendimento (
 	id Bigint NOT NULL AUTO_INCREMENT,
 	id_agenda Bigint NOT NULL,
 	dia Enum('DOMINGO','SEGUNDA','TERCA','QUINTA','SEXTA','SABADO') NOT NULL,
-	hr_ini_atendimento Time NOT NULL,
-	hr_end_atendimento Time NOT NULL,
+	hr_ini_atendimento Varchar(40) NOT NULL,
+	hr_end_atendimento Varchar(40) NOT NULL,
  Primary Key (id)) ENGINE = InnoDB
 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
