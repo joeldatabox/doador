@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * Created by master on 03/11/16.
  */
@@ -25,7 +23,7 @@ public class AgendaController extends Controller<Agenda> {
     private AgendaService service;
 
     @RequestMapping(value = "/api/agendas/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Agenda> get(@PathVariable Long id, HttpServletResponse response) {
+    public ResponseEntity<Agenda> get(@PathVariable Long id) {
         try {
             Agenda agenda = service.findById(id);
             return new ResponseEntity<Agenda>(agenda, HttpStatus.OK);
@@ -35,7 +33,7 @@ public class AgendaController extends Controller<Agenda> {
     }
 
     @RequestMapping(value = "/api/agendas/hemocentros/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Agenda> getByHemocentro(@PathVariable Long id, HttpServletResponse response) {
+    public ResponseEntity<Agenda> getByHemocentro(@PathVariable Long id) {
         try {
             Agenda agenda = service.findHemocentro(id);
             return new ResponseEntity<Agenda>(agenda, HttpStatus.OK);

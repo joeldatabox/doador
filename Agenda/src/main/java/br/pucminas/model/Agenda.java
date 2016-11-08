@@ -33,11 +33,15 @@ public class Agenda implements Serializable {
     private List<DiaAtendimento> diasAtendimento;
     @Column(name = "qtde_leito", nullable = false)
     private Integer qtdeLeito;
+    @Column(name = "status", nullable = false)
+    private Boolean status;
     @Lob
     private String observacao;
 
+
     public Agenda() {
         this.diasAtendimento = new ArrayList();
+        this.status = Boolean.TRUE;
     }
 
     public Long getId() {
@@ -78,6 +82,14 @@ public class Agenda implements Serializable {
 
     public void setDiasAtendimento(List<DiaAtendimento> diasAtendimento) {
         this.diasAtendimento = diasAtendimento;
+    }
+
+    public Boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override

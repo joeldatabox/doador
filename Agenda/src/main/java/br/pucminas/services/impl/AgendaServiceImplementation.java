@@ -25,6 +25,7 @@ public class AgendaServiceImplementation implements AgendaService {
     @Override
     public Agenda findById(Long id) throws AgendaNotFoundException {
         Agenda agenda = repository.findOne(id);
+
         if (agenda == null) {
             throw new AgendaNotFoundException("Registro não encontrado");
         }
@@ -43,7 +44,7 @@ public class AgendaServiceImplementation implements AgendaService {
     @Override
     public Collection<DiaAtendimento> findDiaAtendimento(Long idAgenda) throws AgendaNoContentException {
         Collection<DiaAtendimento> dias = (Collection<DiaAtendimento>) repository.getDiaAtendimento(idAgenda);
-        if (dias == null || dias.isEmpty()) {
+        if (dias == null) {
             throw new AgendaNoContentException();
         }
         return dias;
