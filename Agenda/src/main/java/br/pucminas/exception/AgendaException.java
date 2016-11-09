@@ -8,7 +8,7 @@ import javax.validation.ConstraintViolationException;
  * Created by Joel Rodrigues on 05/08/2016.
  */
 public class AgendaException extends RuntimeException {
-    private HttpStatus httpStatus;
+    private HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
     private String jsonMessage;
 
     public AgendaException() {

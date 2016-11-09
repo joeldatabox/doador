@@ -39,9 +39,14 @@ public class Agenda implements Serializable {
     private String observacao;
 
 
+
     public Agenda() {
         this.diasAtendimento = new ArrayList();
         this.status = Boolean.TRUE;
+    }
+    public Agenda(Long id){
+        this();
+        this.id = id;
     }
 
     public Long getId() {

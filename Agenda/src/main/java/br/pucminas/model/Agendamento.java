@@ -1,6 +1,7 @@
 package br.pucminas.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,7 @@ public class Agendamento implements Serializable {
     private Long idPaciente;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_agendamento", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Date dtAgendamento;
 
     public Long getId() {

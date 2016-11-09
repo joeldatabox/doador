@@ -1,5 +1,6 @@
 package br.pucminas.repository;
 
+import br.pucminas.model.Agenda;
 import br.pucminas.model.Agendamento;
 import br.pucminas.model.DiaAtendimento;
 import br.pucminas.model.enumeration.Dia;
@@ -20,4 +21,12 @@ public interface AgendamentoRepository extends CrudRepository<Agendamento, Long>
     Iterable<DiaAtendimento> containsDiaAtendimento(@Param("dia") Dia dia, @Param("hrInicioAtendimento") String hrInicial);
 
     Iterable<Agendamento> findByDtAgendamento(Date dtAgendamento);
+
+    @Query("SELECT a FROM Agendamento AS a WHERE a.agenda = :agenda")
+    Iterable<Agendamento> findAll(@Param("agenda") Agenda agenda);
+
+    @Query("SELECT a FROM Agendamento AS a WHERE a.agenda = :agenda AND a.id = :id")
+    Agendamento findOne(@Param("id") Long id, @Param("agenda") Agenda agenda);
+
+
 }
