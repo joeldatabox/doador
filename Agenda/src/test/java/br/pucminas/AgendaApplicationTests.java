@@ -1,118 +1,66 @@
 package br.pucminas;
 
-import br.pucminas.service.PacienteService;
+
+import br.pucminas.repository.AgendaRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class AgendaApplicationTests {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     @Autowired
-    private PacienteService service;
+    private AgendaRepository repository;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
-    @Test
-    public void contextLoads() {
-    }
-/*
-    private Paciente createPaciente() {
-        logger.info("INSTANCIANDO UM DOADOR");
-        Paciente entity = new Paciente();
-        entity.setNome("Joel");
-        entity.addEndereco(new Endereco(entity, "R. Padre Mariano", "75.904-439", "Primavera", "Rio Verde", "Observacao teste"));
-        entity.setCpf("039.186.551-05");
-        entity.setDtNascimento(new Date());
-        entity.setNomeMae("Edivanete Rodrigues Moreira");
-        entity.setRg("656555");
-        return entity;
+    private RestTemplate restTemplate = new RestTemplate();
+    private MockMvc mockMvc;
+
+    @Before
+    public void setup() throws Exception {
+        this.mockMvc = webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
-    public void testCreate() {
-        logger.info("INICIANDO TESTE DE INSERÇÃO");
+    public void testSecurity() throws JsonProcessingException {
+        //criando objeto json para a requisição
+        Map<String, Object> body = new HashMap();
+        body.put("userName", "user2");
+        body.put("passWord", "1478");
+        //criando cabeçalho da requisição
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        Exception exception = null;
+        HttpEntity<String> httpEntity = new HttpEntity(OBJECT_MAPPER.writeValueAsString(body), requestHeaders);
 
-        Paciente entity = createPaciente();
-
-        logger.info("TESTANDO INSERÇÃO DE REGISTRO");
-        Paciente createdEntity = service.create(entity);
-
-        Assert.assertNotNull("FALHA - ESPERAVA-SE UM OBJETO NÃO NULLO", createdEntity);
-        Assert.assertNotNull("FALHA - ESPERAVA-SE UM ID NÃO NULO", createdEntity.getId());
-        Assert.assertEquals("FALHA - O ATRIBUTO NOME COM VALOR INESPERADO", "Joel", createdEntity.getNome());
-
-        logger.info("TESTANDO CONFLITO DE REGISTROS");
-        entity.setId(null);
-        try {
-            service.create(entity);
-        } catch (Exception e) {
-            exception = e;
-        }
-
-        Assert.assertNotNull("FALHA - ESPERAVA-SE UMA EXCESSÃO", exception);
-        Assert.assertTrue("FALHA - ESPERAVA-SE UM CONFLITO DE REGISTRO", exception instanceof PacienteConflictException);
-    }
-
-    @Test
-    public void testFindAll() {
-        logger.info("TESTANDO BUSCA DE REGISTRO DE DOADOR");
-        logger.info("INSERINDO REGISTROS");
-        testCreate();
-        //Collection<Doador> list = service.findAll();
-
-        // Assert.assertNotNull("FALHA - ESPERAVA-SE REGISTRO VINDOS DO BANCO DE DADOS", list);
-        // Assert.assertEquals("FALHA - ESPERAVA-SE AO MENOS UM REGISTRO NA LISTA DE RESULTADOS", 1, list.size());
-    }
-
-    @Test
-    public void testUpdateNotFound() {
-
-        Exception exception = null;
-
-        //Doador entity = createPaciente();
-
-        logger.info("INSERINDO REGISTRO PARA TESTE");
-        //entity = service.create(entity);
-
-        logger.info("ATUALIZANDO CPF");
-        //entity.setCpf("656565659");
-        try {
-            logger.info("ATUALIZANDO REGISTRO");
-            //      service.update(entity);
-        } catch (PacienteException e) {
-            exception = e;
-        }
-
-        Assert.assertNotNull("FALHA - ESPERAVA-SE UMA EXCEPTION", exception);
-        Assert.assertTrue("FALHA - ESPERAVA-SE UMA EXCEPTION 'PacienteException'", exception instanceof PacienteException);
-    }
-
-    @Test
-    public void testDelete() {
-        // service.create(createPaciente());
-
-        Long id = new Long(1);
-
-        // Doador entity = service.findById(id);
-
-        //  Assert.assertNotNull("failure - expected not null", entity);
-
-        //service.delete(entity);
-
-        //  Collection<Doador> list = service.findAll();
-
-        // Assert.assertEquals("failure - expected size", 0, list.size());
-
-        // Doador deletedEntity = service.findById(id);
-
-        // Assert.assertNull("failure - expected null", deletedEntity);
+        ResponseEntity<String> apiResponse = restTemplate.postForObject("https://127.0.01:5000/security/auth", httpEntity, ResponseEntity.class);
+        apiResponse.getStatusCode();
 
     }
-*/
+
+    public void testCreateAgenda() throws JsonProcessingException {
+        Map<String, Object> body = new HashMap();
+    }
 }

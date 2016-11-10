@@ -38,6 +38,15 @@ public class DiaAtendimento implements Serializable {
     @Column(name = "hr_end_atendimento", nullable = false)
     private String hrFimAtendimento;
 
+    public DiaAtendimento() {
+    }
+
+    public DiaAtendimento(Dia dia, String hrInicioAtendimento, String hrFimAtendimento) {
+        this.dia = dia;
+        this.hrInicioAtendimento = hrInicioAtendimento;
+        this.hrFimAtendimento = hrFimAtendimento;
+    }
+
     public Long getId() {
         return id;
     }
