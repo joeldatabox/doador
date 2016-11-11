@@ -13,6 +13,8 @@ import br.pucminas.services.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -31,7 +33,8 @@ public class AgendamentoServiceImplementation implements AgendamentoService {
     private AgendamentoRepository repository;
     @Autowired
     private AgendaService agendaService;
-
+    @PersistenceContext
+    private EntityManager em;
     @Override
     public Agendamento create(Agendamento agendamento) throws AgendaException {
         return merge(agendamento);

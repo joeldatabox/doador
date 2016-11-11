@@ -14,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public class Agenda implements Serializable {
     private Long id;
     @Column(name = "id_hemocentro", nullable = false)
     private Long idHemocentro;
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "id_agenda")
     @JsonManagedReference
     private List<DiaAtendimento> diasAtendimento;
@@ -39,12 +40,12 @@ public class Agenda implements Serializable {
     private String observacao;
 
 
-
     public Agenda() {
         this.diasAtendimento = new ArrayList();
         this.status = Boolean.TRUE;
     }
-    public Agenda(Long id){
+
+    public Agenda(Long id) {
         this();
         this.id = id;
     }
@@ -87,6 +88,14 @@ public class Agenda implements Serializable {
 
     public void setDiasAtendimento(List<DiaAtendimento> diasAtendimento) {
         this.diasAtendimento = diasAtendimento;
+    }
+
+    public void addDiasAtendimento(DiaAtendimento... diaAtendimento) {
+        getDiasAtendimento().addAll(Arrays.asList(diaAtendimento));
+    }
+
+    public void addDiasAtendimento(List<DiaAtendimento> diasAtendimento) {
+        getDiasAtendimento().addAll(diasAtendimento);
     }
 
     public Boolean isStatus() {

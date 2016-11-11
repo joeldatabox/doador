@@ -78,11 +78,7 @@
             <artifactId>jjwt</artifactId>
             <version>0.7.0</version>
         </dependency>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-starter-admin-client</artifactId>
-            <version>1.0.2</version>
-        </dependency>
+
     </dependencies>
 
     <build>

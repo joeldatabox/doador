@@ -7,10 +7,16 @@ import br.pucminas.exception.AgendaNotFoundException;
 import br.pucminas.model.Agenda;
 import br.pucminas.model.DiaAtendimento;
 import br.pucminas.repository.AgendaRepository;
+import br.pucminas.repository.DiaAtendimentoRepository;
 import br.pucminas.services.AgendaService;
+import br.pucminas.services.DiaAtendimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transaction;
 import javax.validation.ConstraintViolationException;
 import java.util.Collection;
 
@@ -21,7 +27,10 @@ import java.util.Collection;
 public class AgendaServiceImplementation implements AgendaService {
     @Autowired
     private AgendaRepository repository;
-
+    @Autowired
+    private DiaAtendimentoService diaAtendimentoService;
+    @PersistenceContext
+    private EntityManager em;
     @Override
     public Agenda findById(Long id) throws AgendaNotFoundException {
         Agenda agenda = repository.findOne(id);
@@ -66,6 +75,10 @@ public class AgendaServiceImplementation implements AgendaService {
 
     private Agenda merge(Agenda agenda) {
         agenda.getDiasAtendimento().forEach(d -> d.setAgenda(agenda));
+
+        if (agenda.getQtdeLeito() == null || agenda.getQtdeLeito() < 1) {
+            throw new AgendaException("Informe o numero de leitos disponiveis");
+        }
         if (agenda.getId() != null) {
             Agenda record = repository.findOne(agenda.getId());
             if (record == null) {
@@ -95,9 +108,18 @@ public class AgendaServiceImplementation implements AgendaService {
         return merge(agenda);
     }
 
+    @Transactional
     @Override
     public void delete(Agenda agenda) throws AgendaException {
-        repository.delete(agenda);
+        //diaAtendimentoService.delete(agenda);
+        em.flush();
+        em.createQuery("delete from DiaAtendimento where agenda = :agenda")
+                .setParameter("agenda", agenda)
+                .executeUpdate();
+        em.createQuery("delete from Agenda where id = :id")
+                .setParameter("id", agenda.getId())
+                .executeUpdate();
+
     }
 
     @Override

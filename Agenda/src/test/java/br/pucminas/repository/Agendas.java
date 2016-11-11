@@ -17,13 +17,39 @@ public class Agendas {
     public static List<Agenda> getAgendas() {
         if (agendas == null) {
             agendas = new ArrayList<>();
-        }
-        for (int i = 0; i < 5; i++) {
             Agenda agenda = new Agenda();
             agenda.setIdHemocentro(1L);
-            agenda.setDiasAtendimento();
+            agenda.addDiasAtendimento(getDiasATendimento(Dia.SEGUNDA));
+            agenda.addDiasAtendimento(getDiasATendimento(Dia.TERCA));
+            agenda.addDiasAtendimento(getDiasATendimento(Dia.QUARTA));
+            agenda.addDiasAtendimento(getDiasATendimento(Dia.QUINTA));
+            agenda.addDiasAtendimento(getDiasATendimento(Dia.SEXTA));
+            agenda.setQtdeLeito(20);
+
+            Agenda agenda1 = new Agenda();
+            agenda1.setIdHemocentro(2L);
+            agenda1.addDiasAtendimento(getDiasATendimento(Dia.SEGUNDA));
+            agenda1.addDiasAtendimento(getDiasATendimento(Dia.TERCA));
+            agenda1.addDiasAtendimento(getDiasATendimento(Dia.QUARTA));
+            agenda1.addDiasAtendimento(getDiasATendimento(Dia.QUINTA));
+            agenda1.addDiasAtendimento(getDiasATendimento(Dia.SEXTA));
+            agenda1.setQtdeLeito(10);
+            agendas.add(agenda);
+            agendas.add(agenda1);
         }
+
         return agendas;
+    }
+
+    public static Agenda agendaBuilder(Agenda agenda) {
+        agenda.setIdHemocentro(1L);
+        agenda.addDiasAtendimento(getDiasATendimento(Dia.SEGUNDA));
+        agenda.addDiasAtendimento(getDiasATendimento(Dia.TERCA));
+        agenda.addDiasAtendimento(getDiasATendimento(Dia.QUARTA));
+        agenda.addDiasAtendimento(getDiasATendimento(Dia.QUINTA));
+        agenda.addDiasAtendimento(getDiasATendimento(Dia.SEXTA));
+        agenda.setQtdeLeito(20);
+        return agenda;
     }
 
     private static List<DiaAtendimento> getDiasATendimento(Dia dia) {
@@ -39,6 +65,5 @@ public class Agendas {
                 new DiaAtendimento(dia, "16:00", "17:00"),
                 new DiaAtendimento(dia, "17:00", "18:00")
         );
-        //return dias;
     }
 }

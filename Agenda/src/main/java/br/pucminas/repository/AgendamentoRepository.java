@@ -28,5 +28,4 @@ public interface AgendamentoRepository extends CrudRepository<Agendamento, Long>
     @Query("SELECT a FROM Agendamento AS a WHERE a.agenda = :agenda AND a.id = :id")
     Agendamento findOne(@Param("id") Long id, @Param("agenda") Agenda agenda);
 
-
 }

@@ -26,7 +26,7 @@ public class DiaAtendimento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_agenda", nullable = false)
     @JsonBackReference
     private Agenda agenda;

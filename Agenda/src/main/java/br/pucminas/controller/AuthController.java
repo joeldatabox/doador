@@ -1,8 +1,10 @@
 package br.pucminas.controller;
 
+import br.pucminas.exception.AgendaException;
 import br.pucminas.exception.AgendaUnauthorizedException;
 import br.pucminas.model.JwtUser;
 import br.pucminas.model.User;
+import br.pucminas.services.AuthService;
 import br.pucminas.services.JwtService;
 import br.pucminas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class AuthController extends Controller<User> {
-    @Autowired
+    /*@Autowired
     private UserService service;
     @Autowired
-    private JwtService jwtService;
+    private JwtService jwtService;*/
+    @Autowired
+    private AuthService service;
 
-
-    @RequestMapping(value = "/security/auth", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/security/auth", method = RequestMethod.POST)
     public ResponseEntity<?> auth(@RequestBody User user) {
         Boolean correctCredentials = service.authenticate(user.getUserName(), user.getPassWord());
         if (correctCredentials) {
             return ResponseEntity.ok(jwtService.getToken(new JwtUser(user.getUserName(), user.getPassWord())));
         }
         return processException(new AgendaUnauthorizedException());
+    }*/
+    @RequestMapping(value = "/security/auth", method = RequestMethod.POST)
+    public ResponseEntity<?> auth(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(service.auth(user));
+        } catch (AgendaException ex) {
+            return processException(ex);
+        }
     }
 }

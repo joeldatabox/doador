@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
  */
 public class AgendaConflictException extends AgendaException {
     public AgendaConflictException() {
+        setHttpStatus(HttpStatus.CONFLICT);
     }
 
     public AgendaConflictException(int httpCodeError) {
