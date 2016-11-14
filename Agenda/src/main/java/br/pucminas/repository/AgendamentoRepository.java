@@ -17,8 +17,8 @@ import java.util.Date;
  */
 @Repository
 public interface AgendamentoRepository extends CrudRepository<Agendamento, Long>, QueryByExampleExecutor<Agendamento> {
-    @Query("SELECT d FROM DiaAtendimento AS d WHERE d.dia = :dia AND d.hrInicioAtendimento = :hrInicioAtendimento")
-    Iterable<DiaAtendimento> containsDiaAtendimento(@Param("dia") Dia dia, @Param("hrInicioAtendimento") String hrInicial);
+    @Query("SELECT d FROM DiaAtendimento AS d WHERE d.dia = :dia AND d.hrInicioAtendimento = :hrInicioAtendimento AND d.agenda = :agenda")
+    Iterable<DiaAtendimento> containsDiaAtendimento(@Param("dia") Dia dia, @Param("hrInicioAtendimento") String hrInicial, @Param("agenda") Agenda agenda);
 
     Iterable<Agendamento> findByDtAgendamento(Date dtAgendamento);
 

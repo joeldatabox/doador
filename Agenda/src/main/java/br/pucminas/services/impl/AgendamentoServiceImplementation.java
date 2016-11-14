@@ -100,7 +100,7 @@ public class AgendamentoServiceImplementation implements AgendamentoService {
             String horario = sdf.format(dtAgendamento);
             LocalDateTime ldt = LocalDateTime.ofInstant(dtAgendamento.toInstant(), ZoneId.systemDefault());
             //verifica se tem esse horario na agenda
-            List list = (List) repository.containsDiaAtendimento(Dia.getDiaOfWeek(ldt.getDayOfWeek()), horario);
+            List list = (List) repository.containsDiaAtendimento(Dia.getDiaOfWeek(ldt.getDayOfWeek()), horario, agendamento.getAgenda());
             if (list != null && list.isEmpty()) {
                 throw new AgendaException("Horario indisponível");
             }

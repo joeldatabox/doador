@@ -128,7 +128,7 @@ public class AgendaApplicationTests {
         //criando um novo agendamento
         Agendamento agendamento = new Agendamento();
         agendamento.setAgenda(agenda);
-        agendamento.setDtAgendamento(new Date());
+        agendamento.setDtAgendamento(getValidDate());
         agendamento.setIdPaciente(1L);
 
         agendamento = agendamentoService.create(agendamento);
@@ -172,6 +172,15 @@ public class AgendaApplicationTests {
     private Date getInvalidDate() {
         try {
             return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse("2016-11-11T01:37:56");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Date getValidDate() {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse("2016-11-11T09:00:00");
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
