@@ -35,6 +35,7 @@ public class AgendamentoServiceImplementation implements AgendamentoService {
     private AgendaService agendaService;
     @PersistenceContext
     private EntityManager em;
+
     @Override
     public Agendamento create(Agendamento agendamento) throws AgendaException {
         return merge(agendamento);
@@ -65,11 +66,16 @@ public class AgendamentoServiceImplementation implements AgendamentoService {
 
     @Override
     public Agendamento findOne(Long id, Agenda agenda) throws AgendaNoContentException {
-        Agendamento  agendamento = repository.findOne(id, agenda);
+        Agendamento agendamento = repository.findOne(id, agenda);
         if (agendamento == null) {
             throw new AgendaNotFoundException();
         }
         return agendamento;
+    }
+
+    @Override
+    public void delete(Agendamento agendamento) {
+        delete(agendamento.getId(), agendamento.getAgenda());
     }
 
 
@@ -85,7 +91,7 @@ public class AgendamentoServiceImplementation implements AgendamentoService {
             try {
                 agendamento.setAgenda(agendaService.findById(agendamento.getAgenda().getId()));
             } catch (AgendaNotFoundException ex) {
-                new AgendaNotFoundException("O agendamento deve está ligado a uma agenda!");
+                new AgendaNotFoundException("registro não encontrado");
             }
         }
         Date dtAgendamento = agendamento.getDtAgendamento();
@@ -94,7 +100,8 @@ public class AgendamentoServiceImplementation implements AgendamentoService {
             String horario = sdf.format(dtAgendamento);
             LocalDateTime ldt = LocalDateTime.ofInstant(dtAgendamento.toInstant(), ZoneId.systemDefault());
             //verifica se tem esse horario na agenda
-            if (repository.containsDiaAtendimento(Dia.getDiaOfWeek(ldt.getDayOfWeek()), horario) == null) {
+            List list = (List) repository.containsDiaAtendimento(Dia.getDiaOfWeek(ldt.getDayOfWeek()), horario);
+            if (list != null && list.isEmpty()) {
                 throw new AgendaException("Horario indisponível");
             }
             //verificando se o horario já não foi agendado

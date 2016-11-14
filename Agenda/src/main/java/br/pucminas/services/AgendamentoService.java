@@ -21,5 +21,7 @@ public interface AgendamentoService {
 
     Agendamento findOne(Long id, Agenda agenda) throws AgendaNoContentException;
 
+    public void delete(Agendamento agendamento);
+
     public void delete(Long id, Agenda agenda);
 }
