@@ -27,7 +27,7 @@ public class PacienteController {
     private PacienteService service;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Paciente> get(@PathVariable Long id, HttpServletResponse response) {
+    public ResponseEntity<Paciente> get(@PathVariable Long id) {
         try {
             Paciente paciente = service.findById(id);
             return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
@@ -82,8 +82,6 @@ public class PacienteController {
             return new ResponseEntity(ex.getJsonMessage(), ex.getHttpStatus());
         }
     }
-
-
 
     @RequestMapping(value = "/cpf/{cpf}", method = RequestMethod.GET)
     public Paciente get(@PathVariable String cpf, HttpServletResponse response) {

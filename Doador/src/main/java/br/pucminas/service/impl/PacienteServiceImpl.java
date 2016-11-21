@@ -9,7 +9,10 @@ import br.pucminas.repository.PacienteRepository;
 import br.pucminas.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 import java.util.Collection;
 
@@ -21,6 +24,8 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Autowired
     private PacienteRepository repository;
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public Paciente findById(Long id) throws PacienteNotFoundException {
@@ -82,8 +87,16 @@ public class PacienteServiceImpl implements PacienteService {
         return merge(paciente);
     }
 
+    @Transactional
     @Override
     public void delete(Paciente paciente) {
+        em.flush();
+        em.createQuery("delete from Endereco where paciente = :paciente")
+                .setParameter("paciente", paciente)
+                .executeUpdate();
+        em.createQuery("delete from Paciente where id = :id")
+                .setParameter("id", paciente.getId())
+                .executeUpdate();
         repository.delete(paciente);
     }
 
