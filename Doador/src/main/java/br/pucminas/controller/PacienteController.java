@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * Created by Joel Rodrigues on 03/08/2016.
  */
 @RestController
 @RequestMapping(value = "/api/pacientes", produces = MediaType.APPLICATION_JSON_VALUE)
-public class PacienteController {
+public class PacienteController extends Controller<Paciente> {
     @Autowired
     private PacienteService service;
 
@@ -32,7 +30,7 @@ public class PacienteController {
             Paciente paciente = service.findById(id);
             return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
         } catch (PacienteException ex) {
-            return new ResponseEntity<Paciente>(ex.getHttpStatus());
+            return processException(ex);
         }
     }
 
@@ -42,7 +40,7 @@ public class PacienteController {
         try {
             return new ResponseEntity(service.findAll(), HttpStatus.OK);
         } catch (PacienteException ex) {
-            return new ResponseEntity(ex.getHttpStatus());
+            return processException(ex);
         }
     }
 
@@ -51,7 +49,7 @@ public class PacienteController {
         try {
             return new ResponseEntity(service.create(paciente), HttpStatus.CREATED);
         } catch (PacienteException ex) {
-            return new ResponseEntity(ex.getJsonMessage(), ex.getHttpStatus());
+            return processException(ex);
         }
     }
 
@@ -60,7 +58,7 @@ public class PacienteController {
         try {
             return new ResponseEntity(service.update(paciente), HttpStatus.OK);
         } catch (PacienteException ex) {
-            return new ResponseEntity(ex.getJsonMessage(), ex.getHttpStatus());
+            return processException(ex);
         }
     }
 
@@ -79,18 +77,18 @@ public class PacienteController {
         try {
             return new ResponseEntity(service.count(), HttpStatus.OK);
         } catch (PacienteException ex) {
-            return new ResponseEntity(ex.getJsonMessage(), ex.getHttpStatus());
+            return processException(ex);
         }
     }
 
     @RequestMapping(value = "/cpf/{cpf}", method = RequestMethod.GET)
-    public Paciente get(@PathVariable String cpf, HttpServletResponse response) {
+    public ResponseEntity get(@PathVariable String cpf) {
         Paciente paciente = null;
         try {
-            paciente = service.findByCpf(cpf);
-        } catch (PacienteNotFoundException nf) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return new ResponseEntity<Paciente>(service.findByCpf(cpf), HttpStatus.OK);
+        } catch (PacienteNotFoundException ex) {
+            return processException(ex);
         }
-        return paciente;
+
     }
 }

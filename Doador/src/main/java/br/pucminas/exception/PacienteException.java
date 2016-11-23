@@ -8,7 +8,8 @@ import javax.validation.ConstraintViolationException;
  * Created by Joel Rodrigues on 05/08/2016.
  */
 public class PacienteException extends RuntimeException {
-    private HttpStatus httpStatus;
+    private HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+    ;
     private String jsonMessage;
 
     public PacienteException() {
@@ -40,7 +41,7 @@ public class PacienteException extends RuntimeException {
         sb.append("{\"message\":\"Erro de validacao\",");
         sb.append("\"violations\":[");
         ex.getConstraintViolations().forEach(i -> {
-            if(sb.indexOf("propertyPath") >= 0 ){
+            if (sb.indexOf("propertyPath") >= 0) {
                 sb.append(",");
             }
             sb.append("{\"propertyPath\":\"").append(i.getPropertyPath()).append("\",")
