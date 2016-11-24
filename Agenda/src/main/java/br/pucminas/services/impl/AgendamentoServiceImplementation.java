@@ -91,7 +91,7 @@ public class AgendamentoServiceImplementation implements AgendamentoService {
             try {
                 agendamento.setAgenda(agendaService.findById(agendamento.getAgenda().getId()));
             } catch (AgendaNotFoundException ex) {
-                new AgendaNotFoundException("registro não encontrado");
+                throw new AgendaNotFoundException("registro não encontrado");
             }
         }
         Date dtAgendamento = agendamento.getDtAgendamento();

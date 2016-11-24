@@ -86,4 +86,17 @@ public class User implements Serializable {
     public void setAdmin(Boolean admin) {
         isAdmin = admin;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", email='" + email + '\'' +
+                ", description='" + description + '\'' +
+                ", role='" + role + '\'' +
+                ", isActivated=" + isActivated +
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 }

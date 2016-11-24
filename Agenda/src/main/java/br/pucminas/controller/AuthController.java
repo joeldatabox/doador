@@ -1,12 +1,8 @@
 package br.pucminas.controller;
 
 import br.pucminas.exception.AgendaException;
-import br.pucminas.exception.AgendaUnauthorizedException;
-import br.pucminas.model.JwtUser;
 import br.pucminas.model.User;
 import br.pucminas.services.AuthService;
-import br.pucminas.services.JwtService;
-import br.pucminas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
