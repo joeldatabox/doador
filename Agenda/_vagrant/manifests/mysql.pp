@@ -4,7 +4,7 @@ node 'vagrant.maxxsfa.com' {
 
 class mysql::server{
 	$mysql_password = "12root23@#"
-	$data_base = "maxxsfa"
+	$data_base = "agenda"
 	
 	service { "mysql":
 		ensure => running,
