@@ -1,4 +1,4 @@
-node 'vagrant.maxxsfa.com' {
+node 'vagrant.puc.com' {
     include mysql::server
 }
 

@@ -4,7 +4,7 @@ if which mysql > /dev/null ; then
 	exit 0
 fi
 
-ROOT_PASSWORD="root"
+ROOT_PASSWORD="12root23@#"
 
 echo "mysql-apt-config mysql-apt-config/repo-codename   select trusty" | /usr/bin/debconf-set-selections
 echo "mysql-apt-config mysql-apt-config/select-tools select" | /usr/bin/debconf-set-selections
