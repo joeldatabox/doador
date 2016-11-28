@@ -3,23 +3,19 @@ Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty64"
 
     #definindo o nome da box
-    config.vm.define :maxx_config do |maxx_config|
+    config.vm.define :agenda_config do |agenda_config|
 
-            maxx_config.vm.hostname = "vagrant.puc.com"
-            maxx_config.vm.provision "shell", path: "_vagrant/manifests/apt-get.sh"
-            maxx_config.vm.provision "shell", path: "_vagrant/manifests/bootstrap.sh"
-            maxx_config.vm.provision "shell", path: "_vagrant/manifests/mysql.sh"
-            maxx_config.vm.provision "shell", path: "_vagrant/manifests/java.sh"
+        agenda_config.vm.hostname = "vagrant.puc.com"
+        agenda_config.vm.provision "shell", path: "_vagrant/manifests/apt-get.sh"
+        agenda_config.vm.provision "shell", path: "_vagrant/manifests/bootstrap.sh"
+        agenda_config.vm.provision "shell", path: "_vagrant/manifests/mysql.sh"
+        agenda_config.vm.provision "shell", path: "_vagrant/manifests/java.sh"
 
-            #maxx_config.vm.network "forwarded_port", guest: 3306, host: 3307, host_ip: "127.0.0.1"
-            #maxx_config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
-            #maxx_config.vm.network "forwarded_port", guest: 9990, host: 9990, host_ip: "127.0.0.1"
-            #maxx_config.vm.network "forwarded_port", guest: 51274, host: 51274, host_ip: "127.0.0.1"
-        ends
+        #agenda_config.vm.network "forwarded_port", guest: 3306, host: 3307, host_ip: "127.0.0.1"
+
         config.vm.provider "virtualbox" do |virtualbox|
             virtualbox.customize [ "modifyvm", :id, "--cpus", "1" ]
             virtualbox.customize [ "modifyvm", :id, "--memory", "512" ]
         end
-        #config.vm.synced_folder "./../WebSFA", "/home/vagrant"
-        config.trigger.after :provision, :execute => "vagrant reload"
     end
+end
