@@ -33,6 +33,8 @@ public class Paciente implements Serializable {
     @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "id_paciente")
     private List<Endereco> enderecos;
+    @Column(length = 200)
+    private String email;
     @Column(length = 255)
     @NotNull(message = "O nome não pode ser vazio!")
     private String nome;
@@ -71,6 +73,14 @@ public class Paciente implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCpf() {
