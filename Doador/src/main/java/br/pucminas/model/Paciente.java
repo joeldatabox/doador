@@ -40,7 +40,7 @@ public class Paciente implements Serializable {
     private String nome;
     @Column(length = 20, unique = true, nullable = true)
     @NotNull(message = "Informe um cpf válido!")
-    @CPF(message = "Informe um cpf válido!")
+    /*@CPF(message = "Informe um cpf válido!")*/
     private String cpf;
     @NotNull(message = "informe um rg valido!!")
     private String rg;
