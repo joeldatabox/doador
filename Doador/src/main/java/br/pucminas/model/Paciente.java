@@ -1,7 +1,5 @@
 package br.pucminas.model;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

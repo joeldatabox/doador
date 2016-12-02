@@ -1,5 +1,7 @@
 package br.pucminas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ public class Endereco implements Serializable {
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_paciente", nullable = false)
+    @JsonBackReference
     private Paciente paciente;
     private String descricao;
     private String cep;
