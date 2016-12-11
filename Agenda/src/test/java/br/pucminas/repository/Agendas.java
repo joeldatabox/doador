@@ -18,7 +18,7 @@ public class Agendas {
         if (agendas == null) {
             agendas = new ArrayList<>();
             Agenda agenda = new Agenda();
-            agenda.setIdHemocentro(1L);
+            agenda.setIdHemocentro(59L);
             agenda.addDiasAtendimento(getDiasATendimento(Dia.SEGUNDA));
             agenda.addDiasAtendimento(getDiasATendimento(Dia.TERCA));
             agenda.addDiasAtendimento(getDiasATendimento(Dia.QUARTA));
@@ -27,7 +27,7 @@ public class Agendas {
             agenda.setQtdeLeito(20);
 
             Agenda agenda1 = new Agenda();
-            agenda1.setIdHemocentro(2L);
+            agenda1.setIdHemocentro(70L);
             agenda1.addDiasAtendimento(getDiasATendimento(Dia.SEGUNDA));
             agenda1.addDiasAtendimento(getDiasATendimento(Dia.TERCA));
             agenda1.addDiasAtendimento(getDiasATendimento(Dia.QUARTA));
@@ -42,7 +42,7 @@ public class Agendas {
     }
 
     public static Agenda agendaBuilder(Agenda agenda) {
-        agenda.setIdHemocentro(1L);
+        agenda.setIdHemocentro(110L);
         agenda.addDiasAtendimento(getDiasATendimento(Dia.SEGUNDA));
         agenda.addDiasAtendimento(getDiasATendimento(Dia.TERCA));
         agenda.addDiasAtendimento(getDiasATendimento(Dia.QUARTA));
